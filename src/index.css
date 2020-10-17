@@ -1,0 +1,28 @@
+body
+{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+.form-div form
+{
+  margin-top: -25vh;
+}
+
+.home-screen, .product-screen, .cart-screen{
+  min-height: 80vh;
+}
+
+.card-image{
+  max-height: 240px;
+  width: auto !important;
+}
+
+.btn-outline-secondary
+{
+  background: transparent !important;
+}
+
+.btn-outline-secondary:hover
+{
+  background-color: #020000ef !important;
+}
