@@ -5,10 +5,12 @@ import Footer from './Footer'
 import { Container, Button, Row, Col, ListGroup } from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
 import fb from '../firebase'
+import loader from '../loading.gif'
 
 const Productscreen = ({match}) => {
 
     const [product, setProduct] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -18,6 +20,7 @@ const Productscreen = ({match}) => {
         .then((document) => {
             const data = document.data();
             setProduct(data);
+            setLoading(false);
         });
        
      }, [match]);
@@ -43,51 +46,63 @@ const Productscreen = ({match}) => {
     return (
         <>
             <Header /> 
-            <div className="product-screen">
-                <Container className="my-3 py-3">
-                    <LinkContainer to="/">
-                        <Button variant="secondary" >
-                                Go Back
-                        </Button>
-                    </LinkContainer>
 
-                    <Row className="my-3 py-3">
-                        <Col md={6} className="text-center">
-                            <img src={product.image} alt={product.name} style={{minHeight: "60vh"}} />
-                        </Col>
-                        <Col md={3}>
-                            <ListGroup variant="flush">
-                                <ListGroup.Item>
-                                    <h4>{product.name}</h4>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <h6>Price: {product.price}</h6>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <h6>Rating: {product.rating} | {product.numReviews} user reviews </h6>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <h6>{product.description}</h6>
-                                </ListGroup.Item>
-                            </ListGroup>
-                        </Col>
-                        <Col md={3}>
-                            <ListGroup>
-                                <ListGroup.Item>
-                                    <h6>Price: {product.price}</h6>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <h6> { product.countInStock > 0 ? `In Stock: ${product.countInStock}` : "Out of Stock"} </h6>
-                                </ListGroup.Item>
-                                <ListGroup.Item className="text-center">
-                                    <Button variant="primary" disabled={product.countInStock === 0} onClick={addToCart} > Add To Cart </Button>
-                                </ListGroup.Item>
-                            </ListGroup>
-                        </Col>
-                    </Row>
-                       
-                </Container>
-            </div>
+            { loading ? ( 
+                    <div className="home-screen" style={{display: "flex", justifyContent:"center", alignItems:"center"}}>
+                        <img src={loader} alt="loader"/>
+                    </div>
+                    )
+                    :
+                    (
+                        <div className="product-screen">
+                            <Container className="my-3 py-3">
+                                <LinkContainer to="/">
+                                    <Button variant="secondary" >
+                                            Go Back
+                                    </Button>
+                                </LinkContainer>
+
+                                <Row className="my-3 py-3">
+                                    <Col md={6} className="text-center">
+                                        <img src={product.image} alt={product.name} style={{minHeight: "60vh"}} />
+                                    </Col>
+                                    <Col md={3}>
+                                        <ListGroup variant="flush">
+                                            <ListGroup.Item>
+                                                <h4>{product.name}</h4>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item>
+                                                <h6>Price: {product.price}</h6>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item>
+                                                <h6>Rating: {product.rating} | {product.numReviews} user reviews </h6>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item>
+                                                <h6>{product.description}</h6>
+                                            </ListGroup.Item>
+                                        </ListGroup>
+                                    </Col>
+                                    <Col md={3}>
+                                        <ListGroup>
+                                            <ListGroup.Item>
+                                                <h6>Price: {product.price}</h6>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item>
+                                                <h6> { product.countInStock > 0 ? `In Stock: ${product.countInStock}` : "Out of Stock"} </h6>
+                                            </ListGroup.Item>
+                                            <ListGroup.Item className="text-center">
+                                                <Button variant="primary" disabled={product.countInStock === 0} onClick={addToCart} > Add To Cart </Button>
+                                            </ListGroup.Item>
+                                        </ListGroup>
+                                    </Col>
+                                </Row>
+                                
+                            </Container>
+                        </div>
+                    )
+            }
+
+            
             <Footer />
         </>
     )
