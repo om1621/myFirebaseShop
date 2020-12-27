@@ -12,13 +12,13 @@ import loader from './loading.gif'
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
 
         fb.auth().onAuthStateChanged((user) => {
             setCurrentUser(user);
-            setLoading(true);
+            setLoading(false);
         });
 
     }, []);
@@ -27,7 +27,7 @@ function App() {
      
       <Router> 
 
-        { !loading ? ( 
+        { loading ? ( 
           <div className="home-screen" style={{display: "flex", justifyContent:"center", alignItems:"center"}}>
             <img src={loader} alt="loader"/>
           </div>
